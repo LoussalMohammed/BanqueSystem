@@ -1,21 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>roles | <%= title %></title>
-</head>
-<body>
-    <h1>roles:</h1>
-        <% for(let i = 0; i < roles.length; i++) { %>
-            <ul>
-            <% let role = roles[i]; %>
-            <li>name: <%= role.name %></li>
-            </ul>
-        <% } console.log(roles) %>
-    <form action="/addRole" method="post">
-        <input type="text" placeholder="Role" name="role">
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+<%- include('./partials/header') %>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    input[type="text"], input[type="number"] {
+      padding: 5px;
+      width: calc(100% - 22px);
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button.delete {
+      background-color: #f44336;
+    }
+    button.edit {
+      background-color: #008CBA;
+    }
+  </style>
+  <h1>Roles Management</h1>
+
+  <form action="/addRole" method="POST">
+    <label for="role">New Role:</label>
+    <input type="text" id="role" name="role" required>
+    <button type="submit">Add Role</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% roles.forEach(role => { %>
+        <tr>
+          <td><%= role.id %></td>
+          <td><%= role.name %></td>
+          <td>
+            <form action="/deleteRole" method="POST" style="display:inline;">
+              <input type="hidden" name="id" value="<%= role.id %>">
+              <button type="submit" class="delete">Delete</button>
+            </form>
+            <form action="/editRole" method="POST" style="display:inline;">
+              <input type="hidden" name="id" value="<%= role.id %>">
+              <input type="text" name="newName" placeholder="New Name" required>
+              <button type="submit" class="edit">Edit</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <a href="/">Home</a>
+<%- include('./partials/footer') %>

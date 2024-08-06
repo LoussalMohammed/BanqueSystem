@@ -14,14 +14,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // PostgreSQL connection pool
 const pool = new Pool({
-  user: 'your_username',
-  host: 'your_host',
-  database: 'BanqueSystem',
-  password: 'your_password',
+  user: 'user',
+  host: 'host',
+  database: 'banque',
+  password: 'pass',
   port: 5432,
 });
 
 // Home route
-app.get('/', (req, res) => {
-  res.render('index');
+app.get('/',async (req, res) => {
+  res.send("<h1>hello server is running</h1>");
 });
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+
+// Route to get all users
+app.get('/users', async (req, res) => {
+    try {
+      const result = await pool.query('SELECT * FROM users');
+      res.send(users = result.rows );
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });

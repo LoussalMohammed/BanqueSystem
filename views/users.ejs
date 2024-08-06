@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users | <%= title %></title>
+</head>
+<body>
+    <h1>users:</h1>
+        <% for(let i = 0; i < users.length; i++) { %>
+            <ul>
+            <% let user = users[i]; %>
+            <li>name: <%= user.username %></li>
+            <li>phone: <%= user.phone %></li>
+            <li>email: <%= user.email %></li>
+            </ul>
+        <% } console.log(users) %>
+    
+</body>
+<script>
+    console.log(users);
+</script>
+</html>

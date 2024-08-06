@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>roles | <%= title %></title>
+</head>
+<body>
+    <h1>roles:</h1>
+        <% for(let i = 0; i < roles.length; i++) { %>
+            <ul>
+            <% let role = roles[i]; %>
+            <li>name: <%= role.name %></li>
+            </ul>
+        <% } console.log(roles) %>
+    <form action="/addRole" method="post">
+        <input type="text" placeholder="Role" name="role">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

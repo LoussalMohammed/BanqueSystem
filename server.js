@@ -82,14 +82,32 @@ app.get('/roles', async (req, res) => {
     
 });
 
-app.get('/roleEdit', (req, res) => {
-    res.render('hello');
+app.post('/editRole', async (req, res) => {
+    try {
+        const { id, newName } = req.body;
+        await pool.query('UPDATE roles SET name = ($1) WHERE id = ($2)', [newName, id])
+        .then(() => {
+            res.redirect('/roles');
+        });
+    } catch(err) {
+        console.error(err.message);
+    }
 });
 
 app.post('/addRole', async (req, res) => {
     let role = req.body.role;
     try {
         await pool.query(`INSERT INTO ROLES (name) VALUES ($1)`, [role]);
+        res.redirect('/roles');
+    } catch(err) {
+        console.log(err.message);
+    }
+});
+
+app.post('/deleteRole', async (req, res) => {
+    const id = req.body.id;
+    try {
+        await pool.query('DELETE FROM roles WHERE id = ($1)', [id]);
         res.redirect('/roles');
     } catch(err) {
         console.log(err.message);
